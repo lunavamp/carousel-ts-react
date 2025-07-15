@@ -37,22 +37,30 @@ A modular React testimonial carousel featuring:
 ## 📂 Project Structure
 
 ```plain
-src/
-├── assets/              # Images, fonts, and static files
-│   ├── fonts/
-│   └── img/
-├── components/          # React components
-│   ├── Arrow.tsx
-│   ├── Carousel.tsx
-│   ├── ReviewCard.tsx
-│   └── Testimonials.tsx
-├── data/                # Mock data (testimonials.ts)
-├── styles/              # SCSS styles
-│   └── scss/
-│       └── Carousel.scss # Carousel-specific styles
-├── App.tsx              # Main application entry
-├── main.tsx             # ReactDOM render setup
-└── vite-env.d.ts        # Vite environment types
+├── public/
+│   └── index.html            # Static HTML template
+├── src/
+│   ├── assets/               # Fonts, images, icons
+│   │   ├── fonts/
+│   │   ├── img/
+│   │   └── react.svg
+│   ├── components/           # Core carousel pieces
+│   │   ├── Arrow.tsx         # Prev/Next arrow buttons
+│   │   ├── Carousel.tsx      # Carousel logic & layout
+│   │   └── Dots.tsx          # Pagination dots
+│   ├── styles/               # SCSS styles
+│   │   └── scss/
+│   │       └── Carousel.scss # Carousel-specific styles
+│   ├── ReviewCard.tsx        # Testimonial card component
+│   ├── Testimonials.tsx      # Section wrapper & data import
+│   ├── App.tsx               # Main application component
+│   ├── main.tsx              # ReactDOM render entry point
+│   └── vite-env.d.ts         # Vite environment types
+├── .gitignore
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
 ```
 
 ---
@@ -85,4 +93,4 @@ export const TestimonialsSection: React.FC = () => (
 
 
 
-MIT © 2025
+ © 2025
