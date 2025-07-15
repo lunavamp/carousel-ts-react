@@ -1,0 +1,198 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.carousel {
+  max-width: 136.3rem;
+  width: 100%;
+
+  .carousel-inner {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 3.9rem;
+  }
+
+  .carousel-track {
+    display: flex;
+    overflow: hidden;
+    max-width: 117.2rem;
+    width: 100%;
+    transition: transform 0.4s ease;
+    flex: 1;
+    gap: 1.5rem;
+  }
+
+  .review-card {
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 38rem;
+    background: $bg-color;
+    padding: 5.5rem 2.6rem 2.8rem 3.2rem;
+    border-radius: $border-radius;
+    border: 0.1rem solid $border-color;
+    transition: transform 0.3s ease;
+    text-align: left;
+
+    @include isMobile {
+      width: 100%;
+      padding: 3.2rem 1.8rem 1.8rem;
+      min-height: 47rem;
+      justify-content: space-between;
+
+      .author-name[class] {
+        font-size: $font-m;
+      }
+
+      .author-position[class] {
+        font-size: $font-s;
+      }
+
+      .author-position[class] {
+        max-width: 20rem;
+      }
+    }
+
+    .review-img-container {
+      height: 7.8rem;
+      max-width: 25.5rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 2.2rem;
+    }
+
+    .review-img {
+      object-fit: contain;
+    }
+
+    .review-text {
+      font-weight: 500;
+      font-size: $font-m;
+      line-height: 3.5rem;
+      color: $secondary-text;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .review-author {
+      gap: 1.8rem;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    .author-name {
+      font-weight: 700;
+      font-size: $font-l;
+      line-height: 1.4;
+    }
+
+    .author-position {
+      font-weight: 500;
+      font-size: $font-m;
+      line-height: 1.4;
+    }
+
+    .author-avatar {
+      width: 6.048rem;
+      height: 6.048rem;
+      border-radius: 50%;
+    }
+
+    .quote {
+      display: flex;
+      justify-content: flex-end;
+      width: 102%;
+      font-family: "Staatliches", sans-serif;
+      font-weight: 400;
+      font-size: 9.6rem;
+      font-style: normal;
+      line-height: 3.5rem;
+      color: #c6c5c6;
+      @include isMobile {
+        width: 100%;
+        font-size: 7rem;
+      }
+    }
+  }
+
+  .arrow {
+    font-family: "Spinnaker", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 6rem;
+    line-height: 1rem;
+    background: $bg-color;
+    color: $additional;
+    border-radius: 50%;
+    height: 6.7rem;
+    width: 6.7rem;
+    border: 0.1rem solid $border-color-2;
+    cursor: pointer;
+    padding: 0 2rem 1.1rem;
+    text-align: center;
+    transition: background-color 0.3s ease;
+
+    &.left {
+      margin-right: 2.8rem;
+    }
+
+    &.right {
+      margin-left: 2.8rem;
+    }
+
+    @include isMobile {
+      font-size: 3rem;
+      min-height: 3.4rem;
+      max-width: 3.4rem;
+      width: 100%;
+      height: 100%;
+      padding: 0 0.2rem 0.5rem;
+
+      &.left {
+        margin-right: 0.7rem;
+      }
+
+      &.right {
+        margin-left: 0.7rem;
+      }
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background-color: $border-color-2;
+      }
+    }
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 1.3rem;
+    width: 5rem;
+    height: 1.4rem;
+    margin: 0 auto;
+  }
+
+  .dot {
+    max-width: 1rem;
+    min-height: 1rem;
+    border-radius: 50%;
+    background: #ccc;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &.active {
+      background: #4b4b4b;
+    }
+
+    &:hover {
+      background: #d9d9d9;
+    }
+
+    @include isMobile {
+      max-width: 0.6rem;
+      min-height: 0.6rem;
+    }
+  }
+}

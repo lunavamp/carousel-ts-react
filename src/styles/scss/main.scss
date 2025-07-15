@@ -1,0 +1,29 @@
+@use "sass:color";
+@use "../../../node_modules/@crossfox/css-start/dist/base.min.css"; // styles reset package
+@use "variables" as *;
+@use "mixins" as *;
+@use "base" as *;
+@use "carousel";
+@use "fonts";
+
+.testimonial-section {
+  background: url("../../assets/img/tesimonial-bg.webp") no-repeat center/cover;
+  width: 100%;
+
+  h1 {
+    margin-bottom: 7rem;
+    @include isMobile {
+      margin-bottom: 3rem;
+    }
+  }
+}
+
+.testimonial-container {
+  backdrop-filter: opacity(0.3);
+
+  @include isMobile {
+    width: 92%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
