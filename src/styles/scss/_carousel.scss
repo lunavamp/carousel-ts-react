@@ -4,6 +4,10 @@
 .carousel {
   max-width: 136.3rem;
 
+  @include isMobile {
+    width: 92%;
+  }
+
   .carousel-inner {
     display: flex;
     align-items: center;
