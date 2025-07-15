@@ -1,5 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, {
+  useState,
+  useLayoutEffect,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 import Arrow from "./Arrow";
+import Dots from "./Dots";
 
 type CarouselProps<T> = {
   items: T[];
@@ -7,63 +14,101 @@ type CarouselProps<T> = {
 };
 
 export function Carousel<T>({ items, children }: CarouselProps<T>) {
-  const total = items.length;
-  const [index, setIndex] = useState(0);
   const [slidesPerView, setSlidesPerView] = useState(3);
+  const [slideWidth, setSlideWidth] = useState(0);
+  const [current, setCurrent] = useState(slidesPerView);
+  const [withTransition, setWithTransition] = useState(true);
 
-  useEffect(() => {
-    const onResize = () => setSlidesPerView(window.innerWidth < 768 ? 1 : 3);
+  const total = items.length;
+  const viewportRef = useRef<HTMLDivElement>(null);
+
+  const GAP = 7;
+
+  useLayoutEffect(() => {
+    const onResize = () => {
+      const spv = window.innerWidth < 980 ? 1 : 3;
+      setSlidesPerView(spv);
+      if (viewportRef.current) {
+        const vw = viewportRef.current.clientWidth;
+        const totalGaps = GAP * (spv - 1);
+        setSlideWidth((vw - totalGaps) / spv);
+      }
+    };
     onResize();
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const prev = useCallback(
-    () => setIndex((i) => (i - 1 + total) % total),
-    [total]
-  );
-  const next = useCallback(() => setIndex((i) => (i + 1) % total), [total]);
+  useEffect(() => {
+    setCurrent(slidesPerView);
+  }, [slidesPerView]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [prev, next]);
+    if (!withTransition) {
+      requestAnimationFrame(() => setWithTransition(true));
+    }
+  }, [withTransition]);
 
-  const visible = Array.from(
-    { length: slidesPerView },
-    (_, i) => items[(index + i) % total]
-  );
+  const clonesBefore = items.slice(-slidesPerView);
+  const clonesAfter = items.slice(0, slidesPerView);
+  const extended = [...clonesBefore, ...items, ...clonesAfter];
+
+  const prev = useCallback(() => setCurrent((c) => c - 1), []);
+  const next = useCallback(() => setCurrent((c) => c + 1), []);
+
+  const handleTransitionEnd = useCallback(() => {
+    if (current < slidesPerView) {
+      setWithTransition(false);
+      setCurrent(total + current);
+    } else if (current >= total + slidesPerView) {
+      setWithTransition(false);
+      setCurrent(current - total);
+    }
+  }, [current, slidesPerView, total]);
+
+  const offsetPx = -current * (slideWidth + GAP);
+
+  const isTransition = withTransition ? "transform 0.4s ease" : "none";
 
   return (
     <div className="carousel container">
       <div className="carousel-inner">
         <Arrow direction="left" onClick={prev} />
 
-        <div className="carousel-track">
-          {visible.map((item, i) => (
-            <React.Fragment key={i}>
-              {children(item, (index + i) % total)}
-            </React.Fragment>
-          ))}
+        <div className="carousel-viewport" ref={viewportRef}>
+          <div
+            className="carousel-track"
+            onTransitionEnd={handleTransitionEnd}
+            style={{
+              transform: `translateX(${offsetPx}px)`,
+              transition: `${isTransition}`,
+            }}
+          >
+            {extended.map((item, idx) => (
+              <div
+                key={idx}
+                className="carousel-slide"
+                style={{
+                  width: `${slideWidth}px`,
+                  marginRight:
+                    idx < extended.length - 1 ? `${GAP}px` : undefined,
+                }}
+              >
+                {children(item, (idx - slidesPerView + total) % total)}
+              </div>
+            ))}
+          </div>
         </div>
 
         <Arrow direction="right" onClick={next} />
       </div>
 
-      <div className="carousel-dots">
-        {items.map((_, page) => (
-          <button
-            key={page}
-            className={`dot ${index === page ? "active" : ""}`}
-            onClick={() => setIndex(page)}
-            aria-label={`Go to the next slide ${page + 1}`}
-          />
-        ))}
-      </div>
+      <Dots
+        total={total}
+        currentIndex={current}
+        slidesPerView={slidesPerView}
+        onDotClick={(newIndex) => setCurrent(newIndex)}
+      />
     </div>
   );
 }

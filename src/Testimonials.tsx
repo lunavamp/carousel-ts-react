@@ -46,13 +46,11 @@ const testimonialsData: TestimonialsData[] = [
 ];
 
 export const Testimonials: React.FC = () => (
-  <section className="testimonial-section">
-    <div className="testimonial-container section">
-      <h1 className="main-title">Voices of Success with Sales Fortuna</h1>
-      <Carousel items={testimonialsData}>
-        {(review: Review) => <ReviewCard review={review} />}
-      </Carousel>
-    </div>
+  <section className="testimonial-section section">
+    <h1 className="main-title">Voices of Success with Sales Fortuna</h1>
+    <Carousel items={testimonialsData}>
+      {(review: Review) => <ReviewCard review={review} />}
+    </Carousel>
   </section>
 );
 

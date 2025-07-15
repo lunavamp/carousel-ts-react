@@ -7,7 +7,7 @@
 @use "fonts";
 
 .testimonial-section {
-  background: url("../../assets/img/tesimonial-bg.webp") no-repeat center/cover;
+  background: url("../../assets/img/testimonial-bg.png") no-repeat center/cover;
   width: 100%;
 
   h1 {
@@ -19,8 +19,6 @@
 }
 
 .testimonial-container {
-  backdrop-filter: opacity(0.3);
-
   @include isMobile {
     width: 92%;
     margin-left: auto;

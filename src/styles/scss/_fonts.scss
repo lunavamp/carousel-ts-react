@@ -1,47 +1,24 @@
-@font-face {
-  font-family: "Staatliches";
-  src: url("../../assets/fonts/Staatliches-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+@use "sass:list";
 
-@font-face {
-  font-family: "Spinnaker";
-  src: url("../../assets/fonts/Spinnaker-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+$font-faces: (
+  ("Staatliches", 400, "Staatliches-Regular"),
+  ("Spinnaker", 400, "Spinnaker-Regular"),
+  ("Space Grotesk", 400, "SpaceGrotesk-Regular"),
+  ("Space Grotesk", 500, "SpaceGrotesk-Medium"),
+  ("Space Grotesk", 600, "SpaceGrotesk-SemiBold"),
+  ("Space Grotesk", 700, "SpaceGrotesk-Bold")
+);
 
-@font-face {
-  font-family: "Space Grotesk";
-  src: url("../../assets/fonts/SpaceGrotesk-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+@each $item in $font-faces {
+  $family: list.nth($item, 1);
+  $weight: list.nth($item, 2);
+  $file: list.nth($item, 3);
 
-@font-face {
-  font-family: "Space Grotesk";
-  src: url("../../assets/fonts/SpaceGrotesk-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Space Grotesk";
-  src: url("../../assets/fonts/SpaceGrotesk-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Space Grotesk";
-  src: url("../../assets/fonts/SpaceGrotesk-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+  @font-face {
+    font-family: "#{$family}";
+    src: url("../../assets/fonts/#{$file}.ttf") format("truetype");
+    font-weight: $weight;
+    font-style: normal;
+    font-display: swap;
+  }
 }
