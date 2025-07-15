@@ -85,4 +85,4 @@ export const TestimonialsSection: React.FC = () => (
 
 
 
-MIT © 2025
+ © 2025
